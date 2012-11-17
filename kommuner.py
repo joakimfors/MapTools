@@ -39,3 +39,24 @@ for kommun_id in kommuner:
 			api.RelationUpdate(k)
 api.ChangesetClose()
 
+api.ChangesetCreate({u"comment": u"Copy KNKOD to ref and ref:scb"})
+for kommun_id in kommuner:
+	k = api.RelationGet(kommun_id)
+	update = False
+	if 'KNKOD' in k['tag']:
+		if 'ref' not in k['tag']:
+			print u"%s: set ref=%s" % (k['tag']['official_name'], k['tag']['KNKOD'])
+			k['tag']['ref'] = k['tag']['KNKOD']
+			update = True
+		else:
+			print u"%s: ref=%s already exists" % (k['tag']['official_name'], k['tag']['ref'])
+		if 'ref:scb' not in k['tag']:
+			print u"%s: set ref:scb=%s" % (k['tag']['official_name'], k['tag']['KNKOD'])
+			k['tag']['ref:scb'] = k['tag']['KNKOD']
+			update = True
+		else:
+			print u"%s: ref:scb=%s already exists" % (k['tag']['official_name'], k['tag']['ref:scb'])
+		if update:
+			api.RelationUpdate(k)
+api.ChangesetClose()
+
