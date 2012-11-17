@@ -24,15 +24,15 @@ for kommun_id in kommuner:
 	if 'name' in k['tag'] and 'official_name' in k['tag']:
 		if k['tag']['name'] != k['tag']['official_name']:
 			if 'short_name' not in k['tag'] and 'kommun' not in k['tag']['name']:
-				print "%s: set short_name=%s" % (k['tag']['official_name'], k['tag']['name'])
+				print "%d (%s): set short_name=%s" % (kommun_id, k['tag']['official_name'], k['tag']['name'])
 				k['tag']['short_name'] = k['tag']['name']
 			else:
-				print "%s: short_name already exists, short_name=%s" % (k['tag']['official_name'], k['tag']['short_name'])
-			print u"%s: set name=%s" % (k['tag']['official_name'], k['tag']['official_name'])
+				print "%d (%s): short_name already exists, short_name=%s" % (kommun_id, k['tag']['official_name'], k['tag']['short_name'])
+			print u"%d (%s): set name=%s" % (kommun_id, k['tag']['official_name'], k['tag']['official_name'])
 			k['tag']['name'] = k['tag']['official_name']
 			update = True
 		if 'name:sv' not in k['tag'] or k['tag']['name:sv'] != k['tag']['official_name']:
-			print u"%s: set name:sv=%s" % (k['tag']['official_name'], k['tag']['official_name'])
+			print u"%d (%s): set name:sv=%s" % (kommun_id, k['tag']['official_name'], k['tag']['official_name'])
 			k['tag']['name:sv'] = k['tag']['official_name']
 			update = True
 		if update:
@@ -45,17 +45,17 @@ for kommun_id in kommuner:
 	update = False
 	if 'KNKOD' in k['tag']:
 		if 'ref' not in k['tag']:
-			print u"%s: set ref=%s" % (k['tag']['official_name'], k['tag']['KNKOD'])
+			print u"%d (%s): set ref=%s" % (kommun_id, k['tag']['official_name'], k['tag']['KNKOD'])
 			k['tag']['ref'] = k['tag']['KNKOD']
 			update = True
 		else:
-			print u"%s: ref=%s already exists" % (k['tag']['official_name'], k['tag']['ref'])
+			print u"%d (%s): ref=%s already exists" % (kommun_id, k['tag']['official_name'], k['tag']['ref'])
 		if 'ref:scb' not in k['tag']:
-			print u"%s: set ref:scb=%s" % (k['tag']['official_name'], k['tag']['KNKOD'])
+			print u"%d (%s): set ref:scb=%s" % (kommun_id, k['tag']['official_name'], k['tag']['KNKOD'])
 			k['tag']['ref:scb'] = k['tag']['KNKOD']
 			update = True
 		else:
-			print u"%s: ref:scb=%s already exists" % (k['tag']['official_name'], k['tag']['ref:scb'])
+			print u"%d (%s): ref:scb=%s already exists" % (kommun_id, k['tag']['official_name'], k['tag']['ref:scb'])
 		if update:
 			api.RelationUpdate(k)
 api.ChangesetClose()
